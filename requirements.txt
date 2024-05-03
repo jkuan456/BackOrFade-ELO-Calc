@@ -1,0 +1,6 @@
+keras
+matplotlib
+numpy
+pandas
+python_dateutil==2.8.2
+flask
