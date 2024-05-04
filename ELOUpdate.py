@@ -47,19 +47,19 @@ def getElo(team):
         return "Team not found in the database", 404  # Handling the case where no team matches
 
     value = todayDf.loc[mask, 'Elo'].iloc[0]  # Directly accessing the first matching Elo rating
-    return int(value)
+    return str(int(value))
 
 
 getElo('Arsenal')
 
-@app.route('/teams', methods=['POST'])
+@app.route('/teams', methods=['GET'])
 def get_rank():
-    # Payload = team
-    if not request.json or not 'team' in request.json:
-        return jsonify({'message': 'Bad request'}), 400
-    team = request.json['team']
+    team = request.args.get('team')
+    if not team:
+        return jsonify({'message': 'Bad request: Team parameter is required'}), 400
     print(team)
     return jsonify({'rating': getElo(team)})
+
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0')
