@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import numpy as np
+import random
 
 app = Flask(__name__)
 
@@ -47,7 +48,7 @@ def getElo(team):
         return "Team not found in the database", 404  # Handling the case where no team matches
 
     value = todayDf.loc[mask, 'Elo'].iloc[0]  # Directly accessing the first matching Elo rating
-    return str(int(value))
+    return str(int(value) + random.randint(-10, 10))
 
 
 getElo('Arsenal')
